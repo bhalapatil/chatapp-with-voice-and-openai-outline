@@ -26,8 +26,29 @@ def speech_to_text(audio_binary):
         return text
 
 def text_to_speech(text, voice=""):
-    return None
+    base_url = "https://sn-watson-stt.labs.skills.network"
+    api_url=base_rl+ '/speech-to-text/api/v1/recognize'
 
+    # add voice parameter in the api_url if the user has selected a particular voice
+    if voice != "" and voice != "default":
+        api_url += "&voice=" + voice
+
+    #Set the headers for our HTTP request
+    headers = {
+        'Accept' : 'audio/wav' ,
+        'Content-Type' : 'application/json',
+
+    }
+
+    #Set the body of the HTTP request
+    json_data = {
+
+        'text' :text
+    }
+
+    response = requests.post(api_url,headers=headers,json=json_data)
+    print('text to speech response:' , response)
+    return response.content
 
 def openai_process_message(user_message):
     # set the prompt for the OpenAI Api
