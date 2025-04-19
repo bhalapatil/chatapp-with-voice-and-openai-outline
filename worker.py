@@ -6,7 +6,7 @@ openai_client = OpenAI()
 
 def speech_to_text(audio_binary):
     base_url = "https://sn-watson-stt.labs.skills.network"
-    api_url=base_rl+ '/speech-to-text/api/v1/recognize'
+    api_url=base_url+ '/speech-to-text/api/v1/recognize'
 
     params = {
 
@@ -20,14 +20,14 @@ def speech_to_text(audio_binary):
 
     test ='null'
     while bool(response.get('results')):
-        print('speech to text response', respone)
-        test = response.get('results').pop().get('alternatives').pop().get('transcript')
-        print('recognised text ' : text)
+        print('speech to text response', response)
+        text = response.get('results').pop().get('alternatives').pop().get('transcript')
+        print('recognised text ' , text)
         return text
 
 def text_to_speech(text, voice=""):
     base_url = "https://sn-watson-stt.labs.skills.network"
-    api_url=base_rl+ '/speech-to-text/api/v1/recognize'
+    api_url=base_url+ '/speech-to-text/api/v1/recognize'
 
     # add voice parameter in the api_url if the user has selected a particular voice
     if voice != "" and voice != "default":
@@ -58,7 +58,7 @@ def openai_process_message(user_message):
     openai_response = openai_client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
-                {"role" : "system", "content" : promt},
+                {"role" : "system", "content" : prompt},
                 {"role" : "user" , "content" : user_message}
         ],
         max_tokens=4000
